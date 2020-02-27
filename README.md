@@ -1,47 +1,48 @@
 # About
-This repository contains all the source code and an example problem to perform optimization using the DOT optimizer.  This is a commercially available gradient-based optimizer from [VR&D](http://www.vrand.com).
-
-# Information
-This project was setup to work for both Linux and Windows environments.  The corresponding DOT library is required and a few environment variables should be set when using the wrapper.
+This repository is forked from [MODRG/DOTWrapper](https://github.com/MODRG/DOTWrapper), created by Prof Gerhard Venter on 21 August 2019. The user is recommended to go through its README file first.
 
 # Requirements
-- The DOT optimizer itself (commercially available form [VR&D](http://www.vrand.com)).  A Python wrapper for DOT is provided that will allow the user to call the DOT shared library from Python.  Because DOT is a commercial optimizer, a license is required to use it.
-- [NumPy](http://www.numpy.org/) Python library
-
+- The DOT optimizer itself (commercially available form [VR&D](https://www.vrand.com)). A Python wrapper for DOT is provided that will allow the user to call the DOT shared library from Python. **It should be noted DOT is a commercial optimizer, a license is required to use it.**
+- [NumPy](http://www.numpy.org/) & [Matplotlib ](https://matplotlib.org/) Python library
 
 # File description
 | File        | Description  |
 | ------------- |-------------|
-| [dot.py](https://github.com/MODRG/DOTWrapper/blob/master/dot.py)  | The Python wrapper for DOT |
-| [dot.pdf](https://github.com/MODRG/DOTWrapper/blob/master/dot.pdf) | The DOT manual |
-| [box_example.py](https://github.com/MODRG/DOTWrapper/blob/master/box_example.py) | The first example problem from the DOT manual, using the provided wrapper |
+| [dot.py](https://github.com/CamelCMA/DOTWrapper/blob/master/dot.py)  | The Python wrapper for DOT |
+| [dot.pdf](https://github.com/CamelCMA/DOTWrapper/blob/master/dot.pdf) | The DOT manual |
+| [sec4_2_BoxDesign.py](https://github.com/CamelCMA/DOTWrapper/blob/master/sec4_2_BoxDesign.py) | The first example problem from the DOT manual, using the provided wrapper |
 
-# Getting started
-Before running the code, please make sure that you have DOT installed on your computer.  If you do not have DOT installed, you should get hold of the VisualDOC installation from VR&D.  DOT is installed from within the VisualDOC installation.  It can be installed with VisualDOC, or you can select to only install DOT.  Please make sure to use 64-bit software throughout (this includes a 64-bit Python with the 64-bit DOT shared library).  However, the wrapper should also work if you use 32-bit applications throughout.
+### Figure for model 1
+![nMinMax_0_nMethod_1](https://github.com/CamelCMA/DOTWrapper/blob/master/nMinMax_0_nMethod_1.png)
 
-1. Set the VRAND_AUT environment variable to point to the VR&D license file and the LD_LIBRARY_PATH environment variable to point to the location of your DOT shared library.  For example, on Linux:
-```
-export VRAND_AUT=/opt/vrand/licenses/vrand.lic
-export LD_LIBRARY_PATH=/opt/vrand/dot6.0
-```
-On Windows, you need to define a new environment variable for VRAND_AUT and add the path to your DOT shared library (.dll) to your current PATH environment variable.  It is a good idea to add this to the end of your current PATH environment variable.
+### Figure for model 2
+![nMinMax_0_nMethod_2](https://github.com/CamelCMA/DOTWrapper/blob/master/nMinMax_0_nMethod_2.png)
 
-2. Clone this library (command line info for Linux are provided below)
-```
-git clone https://github.com/MODRG/DOTWrapper.git
-```
+### Figure for model 3
+![nMinMax_0_nMethod_3](https://github.com/CamelCMA/DOTWrapper/blob/master/nMinMax_0_nMethod_3.png)
 
-3. Change to the DOTWrapper folder
-```
-cd DOTWrapper
-```
+# Modification
+Reconstruct the dot.py file and implement the following methods to call:
+* `print_init` can be used to check the input parameters.
+* `fit` calls DOT to resolve the problem.
+* `print_info` prints the following values to screen.
+    * Objective function value
+    * Max violated constraint value
+    * Design variable values
+* `plot_fig` plots the following values as figures. A flag `is_savefig=True` can be used to save the figures and a flag `dpi` can be used to set the resolution of the figures.
+    * Objective function value
+    * Max violated constraint value
+    * Design variable values
 
-4. Run the example
-```
-python box_example.py
-```
+# Problem-defined steps
+4 steps to complete the setting for a optimization problem:
+1. Define the problem in `myEvaluate` function.
+2. Define `nDvar` & `nCons` as integer.
+3. Define `x`, `xl`, `xu` as numpy ndarray.
+4. Configure the model(s) with corresponding method(s) to call.
 
-5. You should now be ready to use DOT in any of your Python projects
+_Typically, the user is recommended to explore the solution by setting different nMethod value. Sometimes, interesting outcomes could be observed._
 
-# Authors
-- Gerhard Venter - First publication 21 August 2019
+# Acknowledgement
+* Thanks for Prof Gerhard Venter constructing the original dot.py file.
+* Thanks for [VR&D](https://www.vrand.com/) sponsoring the trial license of DOT.
